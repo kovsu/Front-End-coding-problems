@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    const  join = (a, b, c) => {
+      return `${a}_${b}_${c}`
+    }
+
+    const curriedJoin = curry(join)
+    const _ = curry.placeholder
+
+    curriedJoin(1, 2, 3) // '1_2_3'
+
+    curriedJoin(_, 2)(1, 3) // '1_2_3'
+
+    curriedJoin(_, _, _)(1)(_, 3)(2) // '1_2_3'
+   -->
+  <script>
+    curry.placeholder = Symbol();
+    function curry(fn) {
+      return function func(...args) {
+        // 参数数组的本质是对象，称为类数组。 args.slice(0, fn.length) 的返回值是一个数组，数组才有includes方法
+        const flag = args.length >= fn.length && !args.slice(0, fn.length).includes(curry.placeholder);
+        if(flag) {
+          return fn(...args);
+        }else {
+          return (...args2) => {
+            // 如果参数传进来有 _ ，就用第二次的参数代替
+            let res = args.map(arg => arg === curry.placeholder && args2.length? args2.shift() : arg);
+            return func(...res.concat(args2));
+          }
+        }
+      }
+    }
+  </script>
+</body>
+</html>

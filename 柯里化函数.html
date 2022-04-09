@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    const join = (a, b, c) => {
+      return `${a}_${b}_${c}`
+    }
+
+    const curriedJoin = curry(join)
+
+    curriedJoin(1, 2, 3) // '1_2_3'
+
+    curriedJoin(1)(2, 3) // '1_2_3'
+
+    curriedJoin(1, 2)(3) // '1_2_3'
+   -->
+  <script>
+    function curry(fn) {
+      return function func(...args) {
+        if(args.length >= fn.length) {
+          return fn(...args);
+        }else {
+          return (...args2) => func(...args.concat(args2));   
+        }
+      }
+    }
+  </script>
+</body>
+</html>
