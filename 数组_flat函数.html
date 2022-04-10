@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    const arr = [1, [2], [3, [4]]];
+
+    flat(arr)
+    // [1, 2, 3, [4]]
+
+    flat(arr, 1)
+    // [1, 2, 3, [4]]
+
+    flat(arr, 2)
+    // [1, 2, 3, 4]
+  -->
+  <script>
+    /**
+     * @param { Array } arr
+     * @param { number } depth
+     * @returns { Array }
+     */
+    function flat(arr, depth = 1) {
+      let result = [];
+      arr.forEach(item => {
+        // 判断 item 是不是数组，再看是否还要扁平化
+        if(Array.isArray(item) && depth > 0) {
+          result.push(...flat(item, depth - 1));
+        } 
+        else result.push(item);
+      });
+      return result;
+    }
+  </script>
+</body>
+</html>
