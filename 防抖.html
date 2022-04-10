@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 防抖（Debounce） 指的是触发事件后n秒后才能执行函数，如果在n秒内触发了事件，则会重新计算执行时间。
+    // 防抖的一个典型实例就是，监听键盘输入，我们不可能每输入一个字母就进行一次对应操作。
+    // 当我们停止输入 wait 秒后，才会进行对应操作
+    function debounce(func, wait) {
+      let timer = null;
+      return function(arg) {
+        clearTimeout(timer);
+        timer = setTimeout(()=> {
+          func(arg);
+        }, wait);
+      }
+    }
+  </script>
+</body>
+</html>

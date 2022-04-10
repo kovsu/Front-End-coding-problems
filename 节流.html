@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // func 是某个操作的方法名
+    // 节流是指连续触发事件但是在 n 秒中只执行一次函数
+    // 稀释了函数的执行频率
+    function throttle(func, wait) {
+      let timer = null;
+      return function(arg) {
+        if(!timer) {
+          func(arg);
+          timer = setTimeout(()=> {
+            timer = null;
+          }, wait);
+        }
+      }
+    }
+  </script>
+</body>
+</html>
