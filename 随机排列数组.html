@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    输入一个数组
+    const arr = [1, 2, 3]
+    编写函数 shuffle(array) 来随机排列数组的元素。
+    多次运行 shuffle 可能导致元素顺序的不同。
+    所有元素顺序应该具有相等的概率。例如，可以将 [1,2,3] 重新排序为 [1,2,3] 或 [1,3,2] 或 [3,1,2] 等，每种情况的概率相等。
+   -->
+   <script>
+     function shuffle(arr) {
+      // modify the arr inline to change the order randomly
+      for (let i = arr.length - 1; i > 0; i--) {
+        const randIdx = Math.floor(Math.random() * (i + 1));
+        const storedItem = arr[i];
+        arr[i] = arr[randIdx];
+        arr[randIdx] = storedItem;
+      }
+      return arr;
+    }
+    let arr = [1, 2, 3];
+    console.log(shuffle(arr));
+   </script>
+</body>
+</html>
