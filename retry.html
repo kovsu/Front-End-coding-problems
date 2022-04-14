@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    实现retry，方法接受两个入参：
+    promiseFunction：调用promiseFunction产生一个promise实例，实例有可能成功，有可能失败
+    timeLimit：timeslimit是最大可重试次数
+    promises实例状态扭转为成功之后，函数返回的promise实例扭转为成功，失败之后，会检查当前充实次数是否超过限制，如果没有超过的话则重试，超过的话，则将返回的promise实例扭转为失败
+
+    function retry(promiseFunction,timesLimit){}
+
+    使用方法：
+    retry(promise,3).then(res => {}).catch(err => {})
+   -->
+   <script>
+    function retry(promiseFunction, timesLimit) {
+      return new Promise(function(resolve, reject){
+        let error;
+        let attempt = function() {
+            if (timesLimit === 0) {
+                reject(error);
+            } else {
+                fn()
+                  .then(resolve)
+                  .catch((e) => {
+                    timesLimit--;
+                    error = e;
+                    attempt();
+                  });
+            }
+        };
+        attempt();
+      });
+    };
+   </script>
+</body>
+</html>
