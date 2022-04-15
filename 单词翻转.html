@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    // 代码题，实现i like you→i ekil uoy
+    function reverseWord(word) {
+      let str = "";
+      for(let i = word.length - 1; i >= 0; i--) {
+        str += word[i];
+      }
+      return str + " ";
+    }
+    function reversSentence(s) {
+      let words = s.split(" ");
+      let res = "";
+      for(let word of words) {
+        res += reverseWord(word);
+      }
+      return res.trim();
+    }
+    console.log(reversSentence("i like you"));
+  </script>
+</body>
+</html>
