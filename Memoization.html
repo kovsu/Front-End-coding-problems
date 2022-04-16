@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    如果 之前 函数有传入相同参数 就不需要进行计算，直接把缓存的结果返回
+  -->
+  <script>
+    function memo(func, resolver) {
+      // your code here
+      const cache = {};;
+      
+      return function (...args) {
+        const key = resolver ? resolver(...args) : args.join('_');
+        if (!cache[key]) {
+          cache[key] = func.apply(this, args);
+        }  
+        return cache[key];
+      };
+    }
+  </script>
+</body>
+</html>
