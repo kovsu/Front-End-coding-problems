@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+
+    请实现你自己的 Event Emitter
+    const emitter = new Emitter()
+    它需要支持事件订阅
+
+    const sub1  = emitter.subscribe('event1', callback1)
+    const sub2 = emitter.subscribe('event2', callback2)
+
+    // 同一个callback可以重复订阅同一个事件
+    const sub3 = emitter.subscribe('event1', callback1)
+    emit(eventName, ...args) 可以用来触发callback
+
+    emitter.emit('event1', 1, 2);
+    // callback1 会被调用两次
+    subscribe()返回一个含有release()的对象，可以用来取消订阅。
+
+    sub1.release()
+    sub3.release()
+    // 现在即使'event1'被触发, 
+    // callback1 也不会被调用
+   -->
+   <script>     
+    // please complete the implementation
+    class EventEmitter {
+      
+      subscriptions = new Map();
+
+      subscribe(eventName, callback) {
+        let subscriptions = this.subscriptions;
+        if(!subscriptions.has(eventName)) {
+          subscriptions.set(eventName, [callback]);
+        }else {
+          subscriptions.set(eventName, [...subscriptions.get(eventName), callback]);
+        }
+
+        return {
+          release: function() {
+            subscriptions.get(eventName).forEach((item, index) => {
+              if(item === callback) {
+                subscriptions.get(eventName).splice(index, 1);
+              }else {
+                return item;
+              }
+            })
+          }
+        }
+      }
+      
+      emit(eventName, ...args) {
+        this.subscriptions.get(eventName).forEach(fn => {
+          fn(...args);
+        })
+      }
+    }
+   </script>
+</body>
+</html>
