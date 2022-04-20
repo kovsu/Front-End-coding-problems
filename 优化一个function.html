@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 
+    // items是一个array
+    // 包含的元素有 >=3 个属性
+
+    let items = [
+      {color: 'red', type: 'tv', age: 18}, 
+      {color: 'silver', type: 'phone', age: 20},
+      {color: 'blue', type: 'book', age: 17}
+    ] 
+
+    // 一个由key和value组成的array
+    const excludes = [ 
+      {k: 'color', v: 'silver'}, 
+      {k: 'type', v: 'tv'}, 
+      ...
+    ] 
+
+    function excludeItems(items, excludes) { 
+      excludes.forEach( pair => { 
+        items = items.filter(item => item[pair.k] === item[pair.v])
+      })
+    
+      return items
+    } 
+    上述excludeItems方法是什么用途?
+    上述方法是否和设想的一样在运作?
+    上述方法的时间复杂度是?
+    你能否优化以下?
+
+  -->
+  <script>
+    function excludeItems(items, excludes) {
+      const excludesMap = excludes.reduce((map, {k, v}) => {
+        if(!map.has(k)) map.set(k, new Set())
+        map.get(k).add(v)
+        return map
+      }, new Map())
+
+      return items.filter(item => {
+        return !Object.keys(item).some(key => excludesMap.has(key) && excludesMap.get(key).has(item[key]))
+      })
+    }
+  </script>
+</body>
+</html>
