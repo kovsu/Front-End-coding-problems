@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+    let p1 = new Promise((res,rej) => {
+      setTimeout(()=>{
+        res("p1调用成功")
+      },500);
+    });
+
+    //p2: 直接转化为res状态
+    let p2 = new Promise((res,rej) => {
+      setTimeout(() => {
+        res('p2')
+      }, 1000);
+    });
+
+    //p3: 1s后转化为rejected状态
+    let p3 = new Promise((res,rej) => {
+      setTimeout(()=>{
+        rej("p3失败了...");
+      },1000)
+    });
+
+    //p4: 2s后转化为rejected状态
+    let p4 = new Promise((res,rej) => {
+      setTimeout(()=>{
+        rej("p4失败了...");
+      },2000)
+    });
+
+    /*
+      all：集合中的每一项都是成功，@P 才是成功（值为一个数组，记录着每一项成功的结果），
+        只要有一项失败，则 @P 就是失败（值为当前失败项的值）并且不再往后处理
+    */
+    
+  const all = (arr) => {
+    let result = [];
+    let count = 0;
+    if(arr.length === 0 ) {
+        return new Promise.resolve(arr)
+    }
+    return new Promise((res, rej) => {
+      for(let i = 0; i < arr.length; i++){
+          arr[i].then(resolve => {
+            result.push(resolve) //将每次结果保存在result数组中
+            count ++  //个数加1
+            //是否所有的promise都进入fullfilled状态
+            if(count === arr.length){
+                res(result)  //返回结果
+            }
+          }).catch(e => {
+            rej(e)  //如果有错误则直接结束循环，并返回错误
+          })
+      };
+    });
+  }; 
+  let arr = [p1, p2, p3, p4];
+  // all(arr);
+  // Promise.all(arr);
+  </script>
+</body>
+</html>
